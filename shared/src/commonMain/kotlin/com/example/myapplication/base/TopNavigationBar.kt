@@ -24,13 +24,13 @@ import com.tencent.kuikly.core.views.Text
 import com.tencent.kuikly.core.views.View
 import com.tencent.kuikly.core.reactive.handler.*
 
-internal class NavigationBar: ComposeView<NavigationBarAttr, ComposeEvent>() {
+internal class TopNavigationBar: ComposeView<TopNavigationBarAttr, ComposeEvent>() {
     override fun createEvent(): ComposeEvent {
         return ComposeEvent()
     }
 
-    override fun createAttr(): NavigationBarAttr {
-        return NavigationBarAttr()
+    override fun createAttr(): TopNavigationBarAttr {
+        return TopNavigationBarAttr()
     }
 
     override fun body(): ViewBuilder {
@@ -77,7 +77,7 @@ internal class NavigationBar: ComposeView<NavigationBarAttr, ComposeEvent>() {
                         attr {
                             absolutePosition(12f + getPager().pageData.statusBarHeight, -17f - 12f + getPager().pageData.pageViewWidth, 12f, 12f)
                             size(17f, 17f)
-                            src(ImageUri.pageAssets("3226aad105442dce35b8460d490074b8.jpeg"))
+                            src(ImageUri.commonAssets("3226aad105442dce35b8460d490074b8.jpeg"))
                         }
                         event {
                             click {
@@ -92,12 +92,12 @@ internal class NavigationBar: ComposeView<NavigationBarAttr, ComposeEvent>() {
 }
 
 
-internal class NavigationBarAttr : ComposeAttr() {
+internal class TopNavigationBarAttr : ComposeAttr() {
     var title : String by observable("")
     var backDisable = false
     var moreButton = false
 }
 
-internal fun ViewContainer<*, *>.NavBar(init: NavigationBar.() -> Unit) {
-    addChild(NavigationBar(), init)
+internal fun ViewContainer<*, *>.TopNavBar(init: TopNavigationBar.() -> Unit) {
+    addChild(TopNavigationBar(), init)
 }

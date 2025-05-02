@@ -9,10 +9,10 @@ pluginManagement {
         maven { setUrl("https://maven.aliyun.com/nexus/content/groups/public/") }
         maven { setUrl("https://maven.aliyun.com/nexus/content/repositories/jcenter") }
 
-//        google()
-//        gradlePluginPortal()
-//        mavenCentral()
-//        mavenLocal()
+        google()
+        gradlePluginPortal()
+        mavenCentral()
+        mavenLocal()
     }
 }
 
@@ -25,9 +25,9 @@ dependencyResolutionManagement {
         maven { setUrl("https://maven.aliyun.com/repository/public") }
         maven { setUrl("https://jitpack.io") }
 
-//        google()
-//        mavenCentral()
-//        mavenLocal()
+        google()
+        mavenCentral()
+        mavenLocal()
     }
 }
 

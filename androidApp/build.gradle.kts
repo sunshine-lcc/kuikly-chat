@@ -5,13 +5,13 @@ plugins {
 
 android {
     namespace = "com.example.myapplication"
-    compileSdk = 33
+    compileSdk = 35
     defaultConfig {
         applicationId = "com.example.myapplication"
         minSdk = 23
-        targetSdk = 33
-        versionCode = 2
-        versionName = "1.1"
+        targetSdk = 35
+        versionCode = 3
+        versionName = "1.3"
     }
 
     buildTypes {
@@ -31,11 +31,11 @@ android {
 dependencies {
     implementation(project(":shared"))
 
-    implementation("androidx.recyclerview:recyclerview:1.2.1")
-    implementation("androidx.appcompat:appcompat:1.3.1")
+    implementation(libs.androidx.recyclerview)
+    implementation(libs.androidx.appcompat)
 
-    implementation("com.squareup.picasso:picasso:2.71828")
+    implementation(libs.picasso)
 
-    implementation("androidx.core:core-ktx:1.6.0")
-    implementation("androidx.dynamicanimation:dynamicanimation:1.0.0")
+    implementation(libs.androidx.core.ktx.v160)
+    implementation(libs.androidx.dynamicanimation)
 }

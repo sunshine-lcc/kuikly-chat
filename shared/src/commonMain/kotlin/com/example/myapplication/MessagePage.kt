@@ -1,15 +1,13 @@
 package com.example.myapplication
 
 import com.example.myapplication.base.BasePager
-import com.example.myapplication.base.NavBar
+import com.example.myapplication.base.BottomNavigationBar
+import com.example.myapplication.base.TopNavBar
 import com.tencent.kuikly.core.annotations.Page
 import com.tencent.kuikly.core.base.Color
-import com.tencent.kuikly.core.base.ComposeEvent
-import com.tencent.kuikly.core.base.ComposeView
 import com.tencent.kuikly.core.base.ViewBuilder
 import com.tencent.kuikly.core.base.attr.ImageUri
 import com.tencent.kuikly.core.directives.vfor
-import com.tencent.kuikly.core.module.RouterModule
 import com.tencent.kuikly.core.reactive.handler.observableList
 import com.tencent.kuikly.core.views.Image
 import com.tencent.kuikly.core.views.Input
@@ -34,7 +32,7 @@ internal class MessagePage : BasePager() {
             attr {
                 backgroundColor(Color.WHITE)
             }
-            NavBar {
+            TopNavBar {
                 attr {
                     title = "首页"
                     backDisable = true
@@ -103,7 +101,11 @@ internal class MessagePage : BasePager() {
                     }
                 }
             }
+            BottomNavigationBar {
+                attr {
 
+                }
+            }
         }
     }
 }
