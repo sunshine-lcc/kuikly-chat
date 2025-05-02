@@ -8,6 +8,7 @@ import com.tencent.kuikly.core.views.View
 import com.tencent.kuikly.core.base.ViewBuilder
 import com.tencent.kuikly.core.base.ViewContainer
 import com.tencent.kuikly.core.base.attr.ImageUri
+import com.tencent.kuikly.core.module.RouterModule
 import com.tencent.kuikly.core.views.Image
 import com.tencent.kuikly.core.views.Text
 
@@ -26,16 +27,23 @@ internal class BottomNavigationBarView: ComposeView<BottomNavigationBarViewAttr,
         return {
             View {
                 attr {
-                    // absolutePosition(30f, 30f, 30f, 30f)
                     flexDirectionRow()
+                    height(getPager().pageData.pageViewWidth / 4)
                     allCenter()
                 }
                 View {
                     attr {
                         width(getPager().pageData.pageViewWidth / 3)
-                        height(getPager().pageData.pageViewWidth / 5)
                         flexDirectionColumn()
+                        backgroundColor(if (getPager().pageName == "MessagePage") Color.RED else Color.TRANSPARENT)
                         allCenter()
+                    }
+                    event {
+                        click { clickParams ->
+                            if (getPager().pageName != "MessagePage") {
+                                getPager().acquireModule<RouterModule>(RouterModule.MODULE_NAME).openPage("MessagePage")
+                            }
+                        }
                     }
                     Image {
                         attr {
@@ -55,9 +63,16 @@ internal class BottomNavigationBarView: ComposeView<BottomNavigationBarViewAttr,
                 View {
                     attr {
                         width(getPager().pageData.pageViewWidth / 3)
-                        height(getPager().pageData.pageViewWidth / 5)
                         flexDirectionColumn()
                         allCenter()
+                        backgroundColor(if (getPager().pageName == "ContactPage") Color.RED else Color.TRANSPARENT)
+                    }
+                    event {
+                        click { clickParams ->
+                            if (getPager().pageName != "ContactPage") {
+                                getPager().acquireModule<RouterModule>(RouterModule.MODULE_NAME).openPage("ContactPage")
+                            }
+                        }
                     }
                     Image {
                         attr {
@@ -77,9 +92,16 @@ internal class BottomNavigationBarView: ComposeView<BottomNavigationBarViewAttr,
                 View {
                     attr {
                         width(getPager().pageData.pageViewWidth / 3)
-                        height(getPager().pageData.pageViewWidth / 5)
                         flexDirectionColumn()
                         allCenter()
+                        backgroundColor(if (getPager().pageName == "SettingPage") Color.RED else Color.TRANSPARENT)
+                    }
+                    event {
+                        click { clickParams ->
+                            if (getPager().pageName != "SettingPage") {
+                                getPager().acquireModule<RouterModule>(RouterModule.MODULE_NAME).openPage("SettingPage")
+                            }
+                        }
                     }
                     Image {
                         attr {

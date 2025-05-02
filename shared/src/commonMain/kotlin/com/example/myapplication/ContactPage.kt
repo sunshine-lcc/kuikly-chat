@@ -16,15 +16,16 @@ import com.tencent.kuikly.core.views.List
 import com.tencent.kuikly.core.views.Text
 import com.tencent.kuikly.core.views.View
 
-@Page("MessagePage")
-internal class MessagePage : BasePager() {
-    private var defaultList by observableList<Int>()
+@Page("ContactPage")
+internal class ContactPage : BasePager() {
+    private var contactsList by observableList<String>()
 
     override fun created() {
         super.created()
-        for (i in 0 until 5) {
-            defaultList.add(i)
-        }
+        contactsList.add("阿明")
+        contactsList.add("阿红")
+        contactsList.add("阿芳")
+        contactsList.add("阿聪")
     }
 
     override fun viewWillUnload() {
@@ -40,9 +41,8 @@ internal class MessagePage : BasePager() {
             }
             TopNavBar {
                 attr {
-                    title = "首页"
+                    title = "联系人"
                     backDisable = true
-                    moreButton = true
                 }
             }
 
@@ -68,49 +68,35 @@ internal class MessagePage : BasePager() {
                     }
                 }
             }
-
             List {
                 attr {
                     flex(1f)
-                    marginTop(15f)
+                    marginTop(20f)
                 }
-                vfor({ctx.defaultList}) { item ->
+                vfor ({ ctx.contactsList }) { item ->
                     View {
                         attr {
                             flexDirectionRow()
-                            marginTop(10f)
                             alignItemsCenter()
+                            margin(10f, 0f, 10f, 0f)
                         }
                         Image {
                             attr {
-                                src(ImageUri.pageAssets("u=2231848948,299743226&fm=253&gp=0.jpg"))
                                 size(50f, 50f)
+                                src(ImageUri.pageAssets("u=371927902,3140277954&fm=253&gp=0.jpg"))
                             }
                         }
-                        View {
+                        Text {
                             attr {
-                                flexDirectionColumn()
-                            }
-                            Text {
-                                attr {
-                                    fontSize(25f)
-                                    text("联系人")
-                                }
-                            }
-                            Text {
-                                attr {
-                                    fontSize(15f)
-                                    text("这是第 $item 条消息")
-                                }
+                                fontSize(23f)
+                                text(item)
                             }
                         }
                     }
                 }
             }
             BottomNavigationBar {
-                attr {
-
-                }
+                attr {}
             }
         }
     }
