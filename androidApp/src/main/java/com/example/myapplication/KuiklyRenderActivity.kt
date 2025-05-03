@@ -14,6 +14,7 @@ import com.tencent.kuikly.core.render.android.css.ktx.toMap
 import com.tencent.kuikly.core.render.android.expand.KuiklyRenderViewBaseDelegatorDelegate
 import com.tencent.kuikly.core.render.android.expand.KuiklyRenderViewBaseDelegator
 import com.example.myapplication.adapter.KRColorParserAdapter
+import com.example.myapplication.adapter.KRDatabaseAdapter
 import com.example.myapplication.adapter.KRFontAdapter
 import com.example.myapplication.adapter.KRImageAdapter
 import com.example.myapplication.adapter.KRLogAdapter
@@ -76,6 +77,9 @@ class KuiklyRenderActivity : AppCompatActivity(), KuiklyRenderViewBaseDelegatorD
             }
             moduleExport(KRShareModule.MODULE_NAME) {
                 KRShareModule()
+            }
+            moduleExport(KRDatabaseAdapter.MODULE_NAME) {
+                KRDatabaseAdapter()
             }
         }
     }

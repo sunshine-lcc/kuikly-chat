@@ -28,7 +28,7 @@ internal class BottomNavigationBarView: ComposeView<BottomNavigationBarViewAttr,
             View {
                 attr {
                     flexDirectionRow()
-                    height(getPager().pageData.pageViewWidth / 4)
+                    height(getPager().pageData.pageViewWidth / 5)
                     allCenter()
                 }
                 View {

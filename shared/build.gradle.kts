@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
@@ -16,9 +18,9 @@ val KEY_PAGE_NAME = "pageName"
 
 kotlin {
     androidTarget {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "1.8"
+        compilations {
+            compilerOptions {
+                jvmTarget.set(JvmTarget.JVM_1_8)
             }
         }
         publishLibraryVariants("release")
@@ -115,7 +117,7 @@ android {
     namespace = "com.example.myapplication.shared"
     compileSdk = 35
     defaultConfig {
-        minSdk = 21
+        minSdk = 31
         lint.targetSdk = 35
     }
     sourceSets {

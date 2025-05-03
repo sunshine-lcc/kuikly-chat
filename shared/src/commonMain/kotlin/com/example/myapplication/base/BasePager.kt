@@ -1,5 +1,6 @@
 package com.example.myapplication.base
 
+import com.example.myapplication.utils.Database
 import com.tencent.kuikly.core.module.Module
 import com.tencent.kuikly.core.nvi.serialization.json.JSONObject
 import com.tencent.kuikly.core.pager.Pager
@@ -11,6 +12,7 @@ internal abstract class BasePager : Pager() {
     override fun createExternalModules(): Map<String, Module>? {
         val externalModules = hashMapOf<String, Module>()
         externalModules[BridgeModule.MODULE_NAME] = BridgeModule()
+        externalModules[Database.MODULE_NAME] = Database()
         return externalModules
     }
 
