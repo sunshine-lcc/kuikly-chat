@@ -15,7 +15,7 @@ repositories {
 val KEY_PAGE_NAME = "pageName"
 
 kotlin {
-    android {
+    androidTarget {
         compilations.all {
             kotlinOptions {
                 jvmTarget = "1.8"
@@ -116,7 +116,7 @@ android {
     compileSdk = 35
     defaultConfig {
         minSdk = 21
-        targetSdk = 35
+        lint.targetSdk = 35
     }
     sourceSets {
         named("main") {

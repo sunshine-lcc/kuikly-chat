@@ -1,0 +1,179 @@
+package com.example.myapplication.home
+
+import com.example.myapplication.base.BasePager
+import com.example.myapplication.home.view.TopNavBar
+import com.example.myapplication.home.view.BottomNavBar
+import com.tencent.kuikly.core.annotations.Page
+import com.tencent.kuikly.core.base.Color
+import com.tencent.kuikly.core.base.ViewBuilder
+import com.tencent.kuikly.core.base.attr.ImageUri
+import com.tencent.kuikly.core.directives.vbind
+import com.tencent.kuikly.core.directives.vfor
+import com.tencent.kuikly.core.pager.PageData
+import com.tencent.kuikly.core.reactive.handler.observable
+import com.tencent.kuikly.core.reactive.handler.observableList
+import com.tencent.kuikly.core.views.Image
+import com.tencent.kuikly.core.views.Input
+import com.tencent.kuikly.core.views.List
+import com.tencent.kuikly.core.views.Text
+import com.tencent.kuikly.core.views.View
+
+@Page("HomePage")
+internal class HomePage : BasePager() {
+    private var curStage by observable("")
+    private var contactsList by observableList<String>()
+    private var messageList by observableList<Int>()
+
+    fun setStage(stage: String) {
+        this.curStage = stage
+    }
+
+    fun getStage(): String {
+        return this.curStage
+    }
+
+    override fun created() {
+        super.created()
+
+        this.curStage = "Message"
+        if (pagerData.stage != "") {
+            this.curStage = pagerData.stage
+        }
+
+        contactsList.add("阿明")
+        contactsList.add("阿红")
+        contactsList.add("阿芳")
+        contactsList.add("阿聪")
+
+        for (i in 0 until 5) {
+            messageList.add(i)
+        }
+    }
+
+    override fun body(): ViewBuilder {
+        val ctx = this
+        return {
+            attr {
+                backgroundColor(Color.WHITE)
+            }
+            TopNavBar {
+                attr {
+                    title = ""
+                    when (ctx.curStage) {
+                        "Message" -> title = "首页"
+                        "Contact" -> title = "联系人"
+                        "Setting" -> title = "设置"
+                    }
+                    backDisable = true
+                }
+            }
+
+            View {
+                attr {
+                    flexDirectionRow()
+                    alignItemsCenter()
+                }
+                Image {
+                    attr {
+                        marginLeft(20f)
+                        src(ImageUri.pageAssets("bbe436e4_E775769_910a88b4.png"))
+                        size(30f, 30f)
+                    }
+                }
+                Input {
+                    attr {
+                        size(200f, 30f)
+                        marginLeft(20f)
+                        placeholder("输入框提示")
+                        placeholderColor(Color.BLACK)
+                        color(Color.BLACK)
+                    }
+                }
+            }
+
+            vbind ({ ctx.curStage }) {
+                when (ctx.curStage) {
+                    "Message" -> {
+                        List {
+                            attr {
+                                flex(1f)
+                                marginTop(15f)
+                            }
+                            vfor({ctx.messageList}) { item ->
+                                View {
+                                    attr {
+                                        flexDirectionRow()
+                                        marginTop(10f)
+                                        alignItemsCenter()
+                                    }
+                                    Image {
+                                        attr {
+                                            src(ImageUri.pageAssets("u=2231848948,299743226&fm=253&gp=0.jpg"))
+                                            size(50f, 50f)
+                                        }
+                                    }
+                                    View {
+                                        attr {
+                                            flexDirectionColumn()
+                                        }
+                                        Text {
+                                            attr {
+                                                fontSize(25f)
+                                                text("联系人")
+                                            }
+                                        }
+                                        Text {
+                                            attr {
+                                                fontSize(15f)
+                                                text("这是第 $item 条消息")
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    "Contact" -> {
+                        List {
+                            attr {
+                                flex(1f)
+                                marginTop(20f)
+                            }
+                            vfor ({ ctx.contactsList }) { item ->
+                                View {
+                                    attr {
+                                        flexDirectionRow()
+                                        alignItemsCenter()
+                                        margin(10f, 0f, 10f, 0f)
+                                    }
+                                    Image {
+                                        attr {
+                                            size(50f, 50f)
+                                            src(ImageUri.pageAssets("u=371927902,3140277954&fm=253&gp=0.jpg"))
+                                        }
+                                    }
+                                    Text {
+                                        attr {
+                                            fontSize(23f)
+                                            text(item)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            BottomNavBar {
+                attr {}
+            }
+        }
+    }
+
+}
+
+internal val PageData.stage: String
+    get() {
+        return params.optString("stage")
+    }

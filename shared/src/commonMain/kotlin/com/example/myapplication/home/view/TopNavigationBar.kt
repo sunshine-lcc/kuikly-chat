@@ -1,36 +1,27 @@
-/*
- * Tencent is pleased to support the open source community by making KuiklyUI
- * available.
- * Copyright (C) 2025 THL A29 Limited, a Tencent company. All rights reserved.
- * Licensed under the License of KuiklyUI;
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * https://github.com/Tencent-TDS/KuiklyUI/blob/main/LICENSE
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+package com.example.myapplication.home.view
 
-package com.example.myapplication.base
-
-import com.tencent.kuikly.core.base.*
+import com.tencent.kuikly.core.base.Color
+import com.tencent.kuikly.core.base.ComposeView
+import com.tencent.kuikly.core.base.ComposeAttr
+import com.tencent.kuikly.core.base.ComposeEvent
+import com.tencent.kuikly.core.base.ViewBuilder
+import com.tencent.kuikly.core.base.ViewContainer
 import com.tencent.kuikly.core.base.attr.ImageUri
 import com.tencent.kuikly.core.directives.vif
 import com.tencent.kuikly.core.module.RouterModule
+import com.tencent.kuikly.core.reactive.handler.observable
 import com.tencent.kuikly.core.views.Image
 import com.tencent.kuikly.core.views.Text
 import com.tencent.kuikly.core.views.View
-import com.tencent.kuikly.core.reactive.handler.*
 
-internal class TopNavigationBar: ComposeView<TopNavigationBarAttr, ComposeEvent>() {
-    override fun createEvent(): ComposeEvent {
-        return ComposeEvent()
+internal class TopNavigationBarView: ComposeView<TopNavigationBarViewAttr, TopNavigationBarViewEvent>() {
+    
+    override fun createEvent(): TopNavigationBarViewEvent {
+        return TopNavigationBarViewEvent()
     }
 
-    override fun createAttr(): TopNavigationBarAttr {
-        return TopNavigationBarAttr()
+    override fun createAttr(): TopNavigationBarViewAttr {
+        return TopNavigationBarViewAttr()
     }
 
     override fun body(): ViewBuilder {
@@ -77,7 +68,7 @@ internal class TopNavigationBar: ComposeView<TopNavigationBarAttr, ComposeEvent>
                         attr {
                             absolutePosition(12f + getPager().pageData.statusBarHeight, -17f - 12f + getPager().pageData.pageViewWidth, 12f, 12f)
                             size(17f, 17f)
-                            src(ImageUri.commonAssets("3226aad105442dce35b8460d490074b8.jpeg"))
+                            src(ImageUri.pageAssets("3226aad105442dce35b8460d490074b8.jpeg"))
                         }
                         event {
                             click {
@@ -92,12 +83,16 @@ internal class TopNavigationBar: ComposeView<TopNavigationBarAttr, ComposeEvent>
 }
 
 
-internal class TopNavigationBarAttr : ComposeAttr() {
+internal class TopNavigationBarViewAttr : ComposeAttr() {
     var title : String by observable("")
     var backDisable = false
     var moreButton = false
 }
 
-internal fun ViewContainer<*, *>.TopNavBar(init: TopNavigationBar.() -> Unit) {
-    addChild(TopNavigationBar(), init)
+internal class TopNavigationBarViewEvent : ComposeEvent() {
+    
+}
+
+internal fun ViewContainer<*, *>.TopNavBar(init: TopNavigationBarView.() -> Unit) {
+    addChild(TopNavigationBarView(), init)
 }
