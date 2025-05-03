@@ -37,3 +37,6 @@ Kotlin-js-store
 *.xcscmblueprint
 *.xcbkptlist
 *.pyc
+
+.kotlin
+androidApp/release

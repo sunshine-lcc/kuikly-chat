@@ -1,6 +1,7 @@
 package com.example.myapplication.base
 
 import com.tencent.kuikly.core.base.BaseObject
+import com.tencent.kuikly.core.base.pagerId
 import com.tencent.kuikly.core.manager.BridgeManager
 import com.tencent.kuikly.core.manager.PagerManager
 

@@ -1,6 +1,6 @@
 package com.example.myapplication.base
 
-import com.tencent.kuikly.core.base.IPagerId
+import com.tencent.kuikly.core.base.PagerScope
 import com.tencent.kuikly.core.base.pagerId
 
 /**
@@ -14,10 +14,10 @@ import com.tencent.kuikly.core.base.pagerId
  * bridgeModule.reportPageCostTimeForError()
  * ```
  */
-internal val IPagerId.bridgeModule: BridgeModule by pagerId {
+internal val PagerScope.bridgeModule: BridgeModule by pagerId {
     Utils.bridgeModule(it)
 }
 
-internal fun IPagerId.setTimeout(delay: Int, callback: () -> Unit): String {
+internal fun PagerScope.setTimeout(delay: Int, callback: () -> Unit): String {
     return com.tencent.kuikly.core.timer.setTimeout(pagerId, delay, callback)
 }
