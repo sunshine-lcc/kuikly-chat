@@ -1,4 +1,4 @@
-package com.example.myapplication.home.view
+package com.example.myapplication.views
 
 import com.tencent.kuikly.core.base.Color
 import com.tencent.kuikly.core.base.ComposeView

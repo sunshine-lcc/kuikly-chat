@@ -1,8 +1,7 @@
 package com.example.myapplication.home
 
 import com.example.myapplication.base.BasePager
-import com.example.myapplication.home.view.TopNavBar
-import com.example.myapplication.home.view.BottomNavBar
+import com.example.myapplication.views.TopNavBar
 import com.example.myapplication.utils.Database
 import com.tencent.kuikly.core.annotations.Page
 import com.tencent.kuikly.core.base.Color
@@ -11,6 +10,8 @@ import com.tencent.kuikly.core.base.attr.ImageUri
 import com.tencent.kuikly.core.directives.vbind
 import com.tencent.kuikly.core.directives.vfor
 import com.tencent.kuikly.core.log.KLog
+import com.tencent.kuikly.core.module.RouterModule
+import com.tencent.kuikly.core.nvi.serialization.json.JSONObject
 import com.tencent.kuikly.core.pager.PageData
 import com.tencent.kuikly.core.reactive.handler.observable
 import com.tencent.kuikly.core.reactive.handler.observableList
@@ -37,8 +38,6 @@ internal class HomePage : BasePager() {
     override fun created() {
         super.created()
         KLog.i(pageName, "stage: ${pagerData.stage}")
-
-        acquireModule<Database>(Database.MODULE_NAME).init("")
 
         this.curStage = "Message"
         if (pagerData.stage != "") {
@@ -70,6 +69,7 @@ internal class HomePage : BasePager() {
                         "Setting" -> title = "设置"
                     }
                     backDisable = true
+                    moreButton = true
                 }
             }
 
@@ -96,7 +96,7 @@ internal class HomePage : BasePager() {
                 }
             }
 
-            vbind ({ ctx.curStage }) {
+            vbind({ ctx.curStage }) {
                 when (ctx.curStage) {
                     "Message" -> {
                         List {
@@ -104,12 +104,22 @@ internal class HomePage : BasePager() {
                                 flex(1f)
                                 marginTop(15f)
                             }
-                            vfor({ctx.messageList}) { item ->
+                            vfor({ ctx.messageList }) { item ->
                                 View {
                                     attr {
                                         flexDirectionRow()
                                         marginTop(10f)
                                         alignItemsCenter()
+                                    }
+                                    event {
+                                        click { clickParams ->
+                                            getPager().acquireModule<RouterModule>(RouterModule.MODULE_NAME)
+                                                .openPage(
+                                                    "ChatPage",
+                                                    JSONObject().apply {
+                                                        put("userId", 1)
+                                                    })
+                                        }
                                     }
                                     Image {
                                         attr {
@@ -138,13 +148,14 @@ internal class HomePage : BasePager() {
                             }
                         }
                     }
+
                     "Contact" -> {
                         List {
                             attr {
                                 flex(1f)
                                 marginTop(20f)
                             }
-                            vfor ({ ctx.contactsList }) { item ->
+                            vfor({ ctx.contactsList }) { item ->
                                 View {
                                     attr {
                                         flexDirectionRow()

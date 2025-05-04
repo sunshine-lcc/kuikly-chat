@@ -7,9 +7,13 @@ import androidx.room.PrimaryKey
 @Entity
 data class ChatRecord(
     @PrimaryKey val uid: Int,
-    @ColumnInfo(name = "user_name") val userName: String?,
-    @ColumnInfo(name = "time_stamp") val timeStamp: String?,
+    @ColumnInfo(name = "user_id") val userId: Int?,
+    @ColumnInfo(name = "time_stamp") val timeStamp: Long?,
     @ColumnInfo(name = "content") val content: String?,
-    @ColumnInfo(name = "direction") val direction: String?,
-    @ColumnInfo(name = "type") val type: String?,
+    @ColumnInfo(name = "is_sent") val isSent: Boolean?,
+    @ColumnInfo(name = "type") val type: MessageType?,
 )
+
+enum class MessageType {
+    NORMAL, LOCATION, CALL
+}

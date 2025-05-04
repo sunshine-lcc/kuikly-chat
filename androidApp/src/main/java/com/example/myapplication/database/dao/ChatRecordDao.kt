@@ -11,11 +11,14 @@ interface ChatRecordDao {
     @Query("SELECT * FROM chatrecord")
     fun getAll(): List<ChatRecord>
 
+    @Query("SELECT * FROM chatrecord WHERE user_id = :userId")
+    fun getByUserId(userId: Int): List<ChatRecord>
+
     @Query("SELECT * FROM chatrecord WHERE uid IN (:chatIds)")
     fun loadAllByIds(chatIds: IntArray): List<ChatRecord>
 
-    @Query("SELECT * FROM chatrecord WHERE user_name LIKE :name LIMIT 1")
-    fun findByName(name: String): ChatRecord
+//    @Query("SELECT * FROM chatrecord WHERE user_id LIKE :id LIMIT 1")
+//    fun findByName(id: Int): ChatRecord
 
     @Insert
     fun insertAll(vararg chats: ChatRecord)

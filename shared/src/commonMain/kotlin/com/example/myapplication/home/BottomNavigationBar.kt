@@ -1,6 +1,5 @@
-package com.example.myapplication.home.view
+package com.example.myapplication.home
 
-import com.example.myapplication.home.HomePage
 import com.tencent.kuikly.core.base.Color
 import com.tencent.kuikly.core.base.ComposeView
 import com.tencent.kuikly.core.base.ComposeAttr
@@ -28,7 +27,7 @@ internal class BottomNavigationBarView: ComposeView<BottomNavigationBarViewAttr,
             View {
                 attr {
                     flexDirectionRow()
-                    height(75f)
+                    marginBottom(20f)
                     allCenter()
                 }
                 View {
@@ -54,7 +53,7 @@ internal class BottomNavigationBarView: ComposeView<BottomNavigationBarViewAttr,
                     Text {
                         attr {
                             color(Color.BLACK)
-                            fontSize(20f)
+                            fontSize(15f)
                             text("消息")
                         }
                     }
@@ -82,7 +81,7 @@ internal class BottomNavigationBarView: ComposeView<BottomNavigationBarViewAttr,
                     Text {
                         attr {
                             color(Color.BLACK)
-                            fontSize(20f)
+                            fontSize(15f)
                             text("联系人")
                         }
                     }
@@ -110,7 +109,7 @@ internal class BottomNavigationBarView: ComposeView<BottomNavigationBarViewAttr,
                     Text {
                         attr {
                             color(Color.BLACK)
-                            fontSize(20f)
+                            fontSize(15f)
                             text("设置")
                         }
                     }
