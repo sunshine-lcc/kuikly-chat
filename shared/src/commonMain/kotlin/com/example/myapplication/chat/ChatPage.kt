@@ -1,6 +1,7 @@
 package com.example.myapplication.chat
 
 import com.example.myapplication.base.BasePager
+import com.example.myapplication.base.BridgeModule
 import com.example.myapplication.utils.Database
 import com.example.myapplication.views.TopNavBar
 import com.tencent.kuikly.core.annotations.Page
@@ -11,6 +12,7 @@ import com.tencent.kuikly.core.base.ViewBuilder
 import com.tencent.kuikly.core.base.attr.ImageUri
 import com.tencent.kuikly.core.directives.vbind
 import com.tencent.kuikly.core.directives.vfor
+import com.tencent.kuikly.core.directives.vforLazy
 import com.tencent.kuikly.core.layout.FlexDirection
 import com.tencent.kuikly.core.log.KLog
 import com.tencent.kuikly.core.nvi.serialization.json.JSONArray
@@ -77,9 +79,9 @@ internal class ChatPage : BasePager() {
                 attr {
                     flex(1f)
                     marginTop(10f)
-                    flexDirectionColumn()
+                    flexDirection(FlexDirection.COLUMN)
                 }
-                vfor ({ctx.chatRecords}) { record ->
+                vforLazy ({ctx.chatRecords}) { record, index, count ->
                     View {
                         attr {
                             maxHeight(150f)
@@ -100,6 +102,13 @@ internal class ChatPage : BasePager() {
                         Text {
                             attr {
                                 fontSize(20f)
+                                backgroundColor(Color.GREEN)
+                                maxWidth(pagerData.pageViewWidth * 0.8f)
+                                if (record.isSent == true) {
+                                    marginLeft(10f)
+                                } else {
+                                    marginRight(10f)
+                                }
                                 text(record.content.toString())
                             }
                         }
@@ -117,7 +126,7 @@ internal class ChatPage : BasePager() {
                 Input {
                     attr {
                         border(Border(2f, BorderStyle.SOLID, Color.BLACK))
-                        size(pagerData.pageViewWidth * 0.68f, 40f)
+                        size(pagerData.pageViewWidth - 130, 40f)
                         margin(0f, 20f, 0f, 20f)
                         placeholder("输入框提示")
                         placeholderColor(Color.BLACK)
@@ -134,7 +143,13 @@ internal class ChatPage : BasePager() {
                         }
                         backgroundColor(Color.GREEN)
                         width(70f)
+                        marginRight(40f)
                         height(40f)
+                    }
+                    event {
+                        click { clickParams ->
+                            getPager().acquireModule<BridgeModule>(BridgeModule.MODULE_NAME).toast("点击了发送按钮")
+                        }
                     }
                 }
             }

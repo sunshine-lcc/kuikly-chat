@@ -20,7 +20,7 @@ kotlin {
     androidTarget {
         compilations {
             compilerOptions {
-                jvmTarget.set(JvmTarget.JVM_1_8)
+                jvmTarget.set(JvmTarget.JVM_21)
             }
         }
         publishLibraryVariants("release")
@@ -48,9 +48,8 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("com.tencent.kuikly-open:core:${Version.getKuiklyVersion()}")
-                implementation("com.tencent.kuikly-open:core-annotations:${Version.getKuiklyVersion()}")
-                implementation(libs.gson)
+                implementation(libs.kuikly.core)
+                implementation(libs.kuikly.core.annotations)
             }
         }
         val commonTest by getting {
@@ -60,7 +59,7 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                api("com.tencent.kuikly-open:core-render-android:${Version.getKuiklyVersion()}")
+                api(libs.kuikly.core.render.android)
             }
         }
 
@@ -105,7 +104,8 @@ ksp {
 }
 
 dependencies {
-    compileOnly("com.tencent.kuikly-open:core-ksp:${Version.getKuiklyVersion()}") {
+    // use libs.versions.toml will cause a exception
+    compileOnly("com.tencent.kuikly-open:core-ksp:2.0.0-2.0.21") {
         add("kspAndroid", this)
         add("kspIosArm64", this)
         add("kspIosX64", this)

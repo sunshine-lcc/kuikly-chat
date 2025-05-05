@@ -52,7 +52,7 @@ internal class TopNavigationBarView: ComposeView<TopNavigationBarViewAttr, TopNa
                 vif({!ctx.attr.backDisable}) {
                     Image {
                         attr {
-                            absolutePosition(12f + getPager().pageData.statusBarHeight, 12f, 12f, 12f)
+                            absolutePosition(15f + getPager().pageData.statusBarHeight, 20f, 0f, 0f)
                             size(10f, 17f)
                             src("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAASBAMAAAB/WzlGAAAAElBMVEUAAAAAAAAAAAAAAAAAAAAAAADgKxmiAAAABXRSTlMAIN/PELVZAGcAAAAkSURBVAjXYwABQTDJqCQAooSCHUAcVROCHBiFECTMhVoEtRYA6UMHzQlOjQIAAAAASUVORK5CYII=")
                         }
@@ -66,7 +66,7 @@ internal class TopNavigationBarView: ComposeView<TopNavigationBarViewAttr, TopNa
                 vif({ctx.attr.moreButton}) {
                     Image {
                         attr {
-                            absolutePosition(12f + getPager().pageData.statusBarHeight, -17f - 12f + getPager().pageData.pageViewWidth, 12f, 12f)
+                            absolutePosition(15f + getPager().pageData.statusBarHeight, -17f - 15f + getPager().pageData.pageViewWidth, 0f, 15f)
                             size(17f, 17f)
                             src(ImageUri.pageAssets("3226aad105442dce35b8460d490074b8.jpeg"))
                         }

@@ -3,6 +3,7 @@ package com.example.myapplication.adapter
 import android.content.Context
 import android.util.Log
 import androidx.room.Room
+import com.example.myapplication.KRApplication
 import com.example.myapplication.database.AppDatabase
 import com.example.myapplication.database.entity.ChatRecord
 import com.example.myapplication.database.entity.MessageType
@@ -20,7 +21,7 @@ class KRDatabaseAdapter: KuiklyRenderBaseModule() {
     private fun initDatabase() {
         Thread {
             val db = Room.databaseBuilder(
-                kuiklyRenderContext?.context as Context,
+                KRApplication.application,
                 AppDatabase::class.java, "sqlite.db"
             ).build()
 
@@ -58,7 +59,7 @@ class KRDatabaseAdapter: KuiklyRenderBaseModule() {
             val userId = params
 
             val db = Room.databaseBuilder(
-                kuiklyRenderContext?.context as Context,
+                KRApplication.application,
                 AppDatabase::class.java, "sqlite.db"
             ).build()
 
@@ -79,7 +80,7 @@ class KRDatabaseAdapter: KuiklyRenderBaseModule() {
     private fun getFriendName(userId: Int, callback: KuiklyRenderCallback?) {
         var name = CompletableFuture.supplyAsync {
             val db = Room.databaseBuilder(
-                kuiklyRenderContext?.context as Context,
+                KRApplication.application,
                 AppDatabase::class.java, "sqlite.db"
             ).build()
 
