@@ -92,7 +92,7 @@ internal class ChatPage : BasePager() {
                         KLog.i("ChatPage", "scrollParams: $scrollParams")
                     }
                     contentSizeChanged { width, height ->
-                        ctx.listViewRef.view?.setContentOffset(0f, height - getPager().pageData.pageViewHeight + 110.5f, false)
+                        ctx.listViewRef.view?.setContentOffset(0f, height - getPager().pageData.pageViewHeight + 110f + getPager().pageData.statusBarHeight, false)
                     }
                 }
                 vforLazy ({ctx.chatRecords}) { record, index, count ->
@@ -147,7 +147,8 @@ internal class ChatPage : BasePager() {
                     attr {
                         border(Border(2f, BorderStyle.SOLID, Color.BLACK))
                         borderRadius(5f)
-                        size(pagerData.pageViewWidth - 130, 40f)
+                        width(pagerData.pageViewWidth - 130)
+                        height(40f)
                         margin(0f, 20f, 0f, 20f)
                         placeholder("输入框提示")
                         placeholderColor(Color.BLACK)
@@ -165,8 +166,8 @@ internal class ChatPage : BasePager() {
                         borderRadius(10f)
                         backgroundColor(Color.GREEN)
                         width(70f)
-                        marginRight(40f)
                         height(40f)
+                        marginRight(40f)
                     }
                     event {
                         click { clickParams ->
