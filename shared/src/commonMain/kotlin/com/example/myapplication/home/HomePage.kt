@@ -2,7 +2,7 @@ package com.example.myapplication.home
 
 import com.example.myapplication.base.BasePager
 import com.example.myapplication.views.TopNavBar
-import com.example.myapplication.utils.Database
+import com.example.myapplication.utils.KVStore
 import com.tencent.kuikly.core.annotations.Page
 import com.tencent.kuikly.core.base.Color
 import com.tencent.kuikly.core.base.ViewBuilder
@@ -12,6 +12,7 @@ import com.tencent.kuikly.core.directives.vfor
 import com.tencent.kuikly.core.directives.vif
 import com.tencent.kuikly.core.log.KLog
 import com.tencent.kuikly.core.module.RouterModule
+import com.tencent.kuikly.core.nvi.serialization.json.JSONArray
 import com.tencent.kuikly.core.nvi.serialization.json.JSONObject
 import com.tencent.kuikly.core.pager.PageData
 import com.tencent.kuikly.core.reactive.handler.observable
@@ -24,7 +25,7 @@ import com.tencent.kuikly.core.views.View
 
 @Page("HomePage")
 internal class HomePage : BasePager() {
-    private var curStage by observable("")
+    private var curStage by observable("Message")
     private var contactsList by observableList<String>()
     private var messageList by observableList<Int>()
 
@@ -39,19 +40,29 @@ internal class HomePage : BasePager() {
     override fun created() {
         super.created()
         KLog.i(pageName, "stage: ${pagerData.stage}")
-
-        this.curStage = "Message"
         if (pagerData.stage != "") {
             this.curStage = pagerData.stage
         }
 
-        contactsList.add("阿明")
-        contactsList.add("阿红")
-        contactsList.add("阿芳")
-        contactsList.add("阿聪")
+        acquireModule<KVStore>(KVStore.MODULE_NAME).init()
+        acquireModule<KVStore>(KVStore.MODULE_NAME).getStoreValue("contactList") {
+            KLog.i("HomePage", "contactList: ${it?.optString("value")}")
+            val result = JSONArray(it?.optString("value").toString())
+            val len = result.length()
 
-        for (i in 0 until 5) {
-            messageList.add(i)
+            for (i in 0 until len) {
+                val temp = result.optString(i)
+                contactsList.add(temp.toString())
+            }
+        }
+
+        acquireModule<KVStore>(KVStore.MODULE_NAME).getStoreValue("messageList") {
+            KLog.i("HomePage", "messageList: ${it?.optString("value")}")
+            val result = it?.optInt("value") as Int
+
+            for (i in 0 until result) {
+                messageList.add(i)
+            }
         }
     }
 

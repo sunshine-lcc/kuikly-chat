@@ -1,6 +1,5 @@
-package com.example.myapplication.adapter
+package com.example.myapplication.module
 
-import android.content.Context
 import android.util.Log
 import androidx.room.Room
 import com.example.myapplication.KRApplication
@@ -8,20 +7,20 @@ import com.example.myapplication.database.AppDatabase
 import com.example.myapplication.database.entity.ChatRecord
 import com.example.myapplication.database.entity.MessageType
 import com.example.myapplication.database.entity.User
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.tencent.kuikly.core.render.android.export.KuiklyRenderBaseModule
 import com.tencent.kuikly.core.render.android.export.KuiklyRenderCallback
 import java.util.concurrent.CompletableFuture
-import com.google.gson.Gson
 
-class KRDatabaseAdapter: KuiklyRenderBaseModule() {
+class KRDatabaseModule: KuiklyRenderBaseModule() {
     companion object {
-        const val MODULE_NAME = "KRDatabaseAdapter"
+        const val MODULE_NAME = "KRDatabaseModule"
     }
 
     private fun initDatabase() {
         Thread {
             val db = Room.databaseBuilder(
-                KRApplication.application,
+                KRApplication.Companion.application,
                 AppDatabase::class.java, "sqlite.db"
             ).build()
 
@@ -29,10 +28,12 @@ class KRDatabaseAdapter: KuiklyRenderBaseModule() {
             val users: List<User> = userDao.getAll()
 
             if (users.isEmpty()) {
-                userDao.insert(User(
-                    uid = 1,
-                    name = "Helen",
-                ))
+                userDao.insert(
+                    User(
+                        uid = 1,
+                        name = "Helen",
+                    )
+                )
             }
 
             val chatRecordDao = db.ChatRecordDao()
@@ -40,14 +41,16 @@ class KRDatabaseAdapter: KuiklyRenderBaseModule() {
 
             if (chatRecords.isEmpty()) {
                 for (i in 0 until 100) {
-                    chatRecordDao.insert(ChatRecord(
-                        uid = i,
-                        userId = 1,
-                        timeStamp = (10000 + i).toLong(),
-                        content = "aassaasa $i kkk",
-                        isSent = i % 4 != 0,
-                        type = MessageType.NORMAL
-                    ))
+                    chatRecordDao.insert(
+                        ChatRecord(
+                            uid = i,
+                            userId = 1,
+                            timeStamp = (10000 + i).toLong(),
+                            content = "aassaasa $i kkk",
+                            sent = i % 4 != 0,
+                            type = MessageType.NORMAL
+                        )
+                    )
                 }
             }
             Log.i(MODULE_NAME, "init chatRecords: $chatRecords")
@@ -59,7 +62,7 @@ class KRDatabaseAdapter: KuiklyRenderBaseModule() {
             val userId = params
 
             val db = Room.databaseBuilder(
-                KRApplication.application,
+                KRApplication.Companion.application,
                 AppDatabase::class.java, "sqlite.db"
             ).build()
 
@@ -70,7 +73,8 @@ class KRDatabaseAdapter: KuiklyRenderBaseModule() {
             chatRecords
         }.join()
 
-        val json = Gson().toJson(records)
+        val mapper = ObjectMapper()
+        val json = mapper.writeValueAsString(records)
         Log.i(MODULE_NAME, "chatRecords json 222: $json")
         callback?.invoke(mapOf(
             "records" to json
@@ -80,13 +84,13 @@ class KRDatabaseAdapter: KuiklyRenderBaseModule() {
     private fun getFriendName(userId: Int, callback: KuiklyRenderCallback?) {
         var name = CompletableFuture.supplyAsync {
             val db = Room.databaseBuilder(
-                KRApplication.application,
+                KRApplication.Companion.application,
                 AppDatabase::class.java, "sqlite.db"
             ).build()
 
             val userDao = db.userDao()
             val user: User = userDao.getUserById(userId)
-            Log.i(KRDatabaseAdapter.MODULE_NAME, "getUser: $user")
+            Log.i(MODULE_NAME, "getUser: $user")
             user.name
         }.join().toString()
         callback?.invoke(mapOf(

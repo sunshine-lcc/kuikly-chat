@@ -11,8 +11,8 @@ android {
         applicationId = "com.example.myapplication"
         minSdk = 31
         targetSdk = 35
-        versionCode = 10
-        versionName = "1.10"
+        versionCode = 11
+        versionName = "1.11"
     }
 
     buildTypes {
@@ -50,11 +50,10 @@ dependencies {
     implementation(libs.picasso)
     implementation(libs.androidx.core.ktx.v160)
     implementation(libs.androidx.dynamicanimation)
-
+    implementation(libs.jackson.databind)
     implementation(libs.androidx.room.runtime)
     // If this project uses any Kotlin source, use Kotlin Symbol Processing (KSP)
     // See Add the KSP plugin to your project
     ksp(libs.androidx.room.compiler)
-
-    implementation(libs.gson)
+    implementation(libs.mmkv)
 }

@@ -6,7 +6,6 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowInsets
 import android.view.WindowInsetsController
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
@@ -18,7 +17,7 @@ import com.tencent.kuikly.core.render.android.css.ktx.toMap
 import com.tencent.kuikly.core.render.android.expand.KuiklyRenderViewBaseDelegatorDelegate
 import com.tencent.kuikly.core.render.android.expand.KuiklyRenderViewBaseDelegator
 import com.example.myapplication.adapter.KRColorParserAdapter
-import com.example.myapplication.adapter.KRDatabaseAdapter
+import com.example.myapplication.module.KRDatabaseModule
 import com.example.myapplication.adapter.KRFontAdapter
 import com.example.myapplication.adapter.KRImageAdapter
 import com.example.myapplication.adapter.KRLogAdapter
@@ -26,6 +25,7 @@ import com.example.myapplication.adapter.KRRouterAdapter
 import com.example.myapplication.adapter.KRThreadAdapter
 import com.example.myapplication.adapter.KRUncaughtExceptionHandlerAdapter
 import com.example.myapplication.module.KRBridgeModule
+import com.example.myapplication.module.KRKVStoreModule
 import com.example.myapplication.module.KRShareModule
 import org.json.JSONObject
 
@@ -82,8 +82,11 @@ class KuiklyRenderActivity : AppCompatActivity(), KuiklyRenderViewBaseDelegatorD
             moduleExport(KRShareModule.MODULE_NAME) {
                 KRShareModule()
             }
-            moduleExport(KRDatabaseAdapter.MODULE_NAME) {
-                KRDatabaseAdapter()
+            moduleExport(KRDatabaseModule.MODULE_NAME) {
+                KRDatabaseModule()
+            }
+            moduleExport(KRKVStoreModule.MODULE_NAME) {
+                KRKVStoreModule()
             }
         }
     }

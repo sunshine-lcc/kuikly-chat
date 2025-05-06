@@ -10,7 +10,7 @@ data class ChatRecord(
     @ColumnInfo(name = "user_id") val userId: Int?,
     @ColumnInfo(name = "time_stamp") val timeStamp: Long?,
     @ColumnInfo(name = "content") val content: String?,
-    @ColumnInfo(name = "is_sent") val isSent: Boolean?,
+    @ColumnInfo(name = "sent") val sent: Boolean?,
     @ColumnInfo(name = "type") val type: MessageType?,
 )
 

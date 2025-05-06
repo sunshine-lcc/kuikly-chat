@@ -5,7 +5,7 @@ class ChatRecord(
     val userId: Int?,
     val timeStamp: Long?,
     val content: String?,
-    val isSent: Boolean?,
+    val sent: Boolean?,
     val type: MessageType?,
 )
 

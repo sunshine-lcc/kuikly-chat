@@ -6,7 +6,7 @@ import com.tencent.kuikly.core.module.Module
 import com.tencent.kuikly.core.nvi.serialization.json.JSONObject
 
 class Database: Module() {
-    override fun moduleName(): String = "KRDatabaseAdapter"
+    override fun moduleName(): String = "KRDatabaseModule"
     companion object {
         const val MODULE_NAME = "DatabaseModule"
     }

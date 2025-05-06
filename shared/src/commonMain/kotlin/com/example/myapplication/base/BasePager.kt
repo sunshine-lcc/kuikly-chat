@@ -1,6 +1,7 @@
 package com.example.myapplication.base
 
 import com.example.myapplication.utils.Database
+import com.example.myapplication.utils.KVStore
 import com.tencent.kuikly.core.module.Module
 import com.tencent.kuikly.core.nvi.serialization.json.JSONObject
 import com.tencent.kuikly.core.pager.Pager
@@ -13,6 +14,8 @@ internal abstract class BasePager : Pager() {
         val externalModules = hashMapOf<String, Module>()
         externalModules[BridgeModule.MODULE_NAME] = BridgeModule()
         externalModules[Database.MODULE_NAME] = Database()
+        externalModules[KVStore.MODULE_NAME] = KVStore()
+
         return externalModules
     }
 

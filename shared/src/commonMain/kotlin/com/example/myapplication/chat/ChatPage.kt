@@ -46,17 +46,19 @@ internal class ChatPage : BasePager() {
         KLog.i("ChatPage", "getUserId: ${this.friendId}")
 
         acquireModule<Database>(Database.MODULE_NAME).pullChatRecords(this.friendId) {
+            KLog.i("ChatPage", "records 333: ${it?.optString("records").toString()}")
             val temp = JSONArray(it?.optString("records").toString())
             val len = temp.length()
 
             for (i in 0 until len) {
                 val tempJSONObject = temp.optJSONObject(i)
+                KLog.i("ChatPage", "tempJSONObj 444: $tempJSONObject")
                 chatRecords.add(ChatRecord(
                     uid = tempJSONObject?.optInt("uid"),
                     userId = tempJSONObject?.optInt("userId"),
                     timeStamp = tempJSONObject?.optLong("timeStamp"),
                     content = tempJSONObject?.optString("content"),
-                    isSent = tempJSONObject?.optBoolean("isSent"),
+                    sent = tempJSONObject?.optBoolean("sent"),
                     type = MessageType.valueOf(tempJSONObject?.optString("type").toString())
                 ))
             }
@@ -97,7 +99,7 @@ internal class ChatPage : BasePager() {
                             maxHeight(150f)
                             margin(5f, 0f, 5f, 0f)
                             alignItemsCenter()
-                            if (record.isSent == true) {
+                            if (record.sent == true) {
                                 flexDirectionRow()
                             } else {
                                 flexDirection(FlexDirection.ROW_REVERSE)
@@ -115,7 +117,7 @@ internal class ChatPage : BasePager() {
                                 backgroundColor(Color.GREEN)
                                 maxWidth(pagerData.pageViewWidth * 0.8f)
                                 borderRadius(5f)
-                                if (record.isSent == true) {
+                                if (record.sent == true) {
                                     marginLeft(10f)
                                 } else {
                                     marginRight(10f)
