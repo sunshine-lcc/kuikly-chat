@@ -12,6 +12,7 @@ import com.tencent.kuikly.core.base.ViewBuilder
 import com.tencent.kuikly.core.base.ViewRef
 import com.tencent.kuikly.core.base.attr.ImageUri
 import com.tencent.kuikly.core.directives.vbind
+import com.tencent.kuikly.core.directives.vfor
 import com.tencent.kuikly.core.directives.vforLazy
 import com.tencent.kuikly.core.layout.FlexDirection
 import com.tencent.kuikly.core.log.KLog
@@ -95,7 +96,7 @@ internal class ChatPage : BasePager() {
                         ctx.listViewRef.view?.setContentOffset(0f, height - getPager().pageData.pageViewHeight + 110f + getPager().pageData.statusBarHeight, false)
                     }
                 }
-                vforLazy ({ctx.chatRecords}) { record, index, count ->
+                vfor ({ctx.chatRecords}) { record ->
                     View {
                         attr {
                             maxHeight(150f)
