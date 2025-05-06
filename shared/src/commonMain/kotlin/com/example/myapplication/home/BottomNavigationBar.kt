@@ -1,9 +1,11 @@
 package com.example.myapplication.home
 
 import com.tencent.kuikly.core.base.Color
+import com.tencent.kuikly.core.base.ColorStop
 import com.tencent.kuikly.core.base.ComposeView
 import com.tencent.kuikly.core.base.ComposeAttr
 import com.tencent.kuikly.core.base.ComposeEvent
+import com.tencent.kuikly.core.base.Direction
 import com.tencent.kuikly.core.base.ViewBuilder
 import com.tencent.kuikly.core.base.ViewContainer
 import com.tencent.kuikly.core.base.attr.ImageUri
@@ -11,8 +13,9 @@ import com.tencent.kuikly.core.views.Image
 import com.tencent.kuikly.core.views.Text
 import com.tencent.kuikly.core.views.View
 
-internal class BottomNavigationBarView: ComposeView<BottomNavigationBarViewAttr, BottomNavigationBarViewEvent>() {
-    
+internal class BottomNavigationBarView :
+    ComposeView<BottomNavigationBarViewAttr, BottomNavigationBarViewEvent>() {
+
     override fun createEvent(): BottomNavigationBarViewEvent {
         return BottomNavigationBarViewEvent()
     }
@@ -29,12 +32,18 @@ internal class BottomNavigationBarView: ComposeView<BottomNavigationBarViewAttr,
                     flexDirectionRow()
                     marginBottom(20f)
                     allCenter()
+                    backgroundLinearGradient(
+                        Direction.TO_TOP,
+                        ColorStop(Color.WHITE, 0f),
+                        ColorStop(Color.GRAY, 1f),
+                        ColorStop(Color.WHITE, 0f)
+                    )
                 }
                 View {
                     attr {
                         width(getPager().pageData.pageViewWidth / 3)
                         flexDirectionColumn()
-                        backgroundColor(if ((getPager() as HomePage).getStage() == "Message") Color.RED else Color.TRANSPARENT)
+                        // backgroundColor(if ((getPager() as HomePage).getStage() == "Message") Color.RED else Color.TRANSPARENT)
                         allCenter()
                     }
                     event {
@@ -47,12 +56,13 @@ internal class BottomNavigationBarView: ComposeView<BottomNavigationBarViewAttr,
                         attr {
                             // absolutePosition(12f + getPager().pageData.statusBarHeight, -17f - 12f + getPager().pageData.pageViewWidth, 12f, 12f)
                             size(30f, 30f)
-                            src(ImageUri.pageAssets("R-C.png"))
+                            tintColor(if ((getPager() as HomePage).getStage() == "Message") Color.BLUE else Color.BLACK)
+                            src(ImageUri.pageAssets("message.png"))
                         }
                     }
                     Text {
                         attr {
-                            color(Color.BLACK)
+                            color(if ((getPager() as HomePage).getStage() == "Message") Color.BLUE else Color.BLACK)
                             fontSize(15f)
                             text("消息")
                         }
@@ -63,7 +73,7 @@ internal class BottomNavigationBarView: ComposeView<BottomNavigationBarViewAttr,
                         width(getPager().pageData.pageViewWidth / 3)
                         flexDirectionColumn()
                         allCenter()
-                        backgroundColor(if ((getPager() as HomePage).getStage() == "Contact") Color.RED else Color.TRANSPARENT)
+                        // backgroundColor(if ((getPager() as HomePage).getStage() == "Contact") Color.RED else Color.TRANSPARENT)
                     }
                     event {
                         click { clickParams ->
@@ -75,12 +85,13 @@ internal class BottomNavigationBarView: ComposeView<BottomNavigationBarViewAttr,
                         attr {
                             // absolutePosition(12f + getPager().pageData.statusBarHeight, -17f - 12f + getPager().pageData.pageViewWidth, 12f, 12f)
                             size(30f, 30f)
-                            src(ImageUri.pageAssets("0e42a72d-39fc-4cef-8d47-77f957752262_medium_thumb.jpg"))
+                            tintColor(if ((getPager() as HomePage).getStage() == "Contact") Color.BLUE else Color.BLACK)
+                            src(ImageUri.pageAssets("associates.png"))
                         }
                     }
                     Text {
                         attr {
-                            color(Color.BLACK)
+                            color(if ((getPager() as HomePage).getStage() == "Contact") Color.BLUE else Color.BLACK)
                             fontSize(15f)
                             text("联系人")
                         }
@@ -91,7 +102,7 @@ internal class BottomNavigationBarView: ComposeView<BottomNavigationBarViewAttr,
                         width(getPager().pageData.pageViewWidth / 3)
                         flexDirectionColumn()
                         allCenter()
-                        backgroundColor(if ((getPager() as HomePage).getStage() == "Setting") Color.RED else Color.TRANSPARENT)
+                        // backgroundColor(if ((getPager() as HomePage).getStage() == "Setting") Color.RED else Color.TRANSPARENT)
                     }
                     event {
                         click { clickParams ->
@@ -103,12 +114,13 @@ internal class BottomNavigationBarView: ComposeView<BottomNavigationBarViewAttr,
                         attr {
                             // absolutePosition(12f + getPager().pageData.statusBarHeight, -17f - 12f + getPager().pageData.pageViewWidth, 12f, 12f)
                             size(30f, 30f)
-                            src(ImageUri.pageAssets("4106126ea416e23288ceeffe672d0ad7.jpg"))
+                            tintColor(if ((getPager() as HomePage).getStage() == "Setting") Color.BLUE else Color.BLACK)
+                            src(ImageUri.pageAssets("gear.png"))
                         }
                     }
                     Text {
                         attr {
-                            color(Color.BLACK)
+                            color(if ((getPager() as HomePage).getStage() == "Setting") Color.BLUE else Color.BLACK)
                             fontSize(15f)
                             text("设置")
                         }
@@ -125,7 +137,7 @@ internal class BottomNavigationBarViewAttr : ComposeAttr() {
 }
 
 internal class BottomNavigationBarViewEvent : ComposeEvent() {
-    
+
 }
 
 internal fun ViewContainer<*, *>.BottomNavBar(init: BottomNavigationBarView.() -> Unit) {

@@ -9,11 +9,13 @@ import com.tencent.kuikly.core.base.Border
 import com.tencent.kuikly.core.base.BorderStyle
 import com.tencent.kuikly.core.base.Color
 import com.tencent.kuikly.core.base.ViewBuilder
+import com.tencent.kuikly.core.base.ViewRef
 import com.tencent.kuikly.core.base.attr.ImageUri
 import com.tencent.kuikly.core.directives.vbind
 import com.tencent.kuikly.core.directives.vfor
 import com.tencent.kuikly.core.directives.vforLazy
 import com.tencent.kuikly.core.layout.FlexDirection
+import com.tencent.kuikly.core.layout.FlexJustifyContent
 import com.tencent.kuikly.core.log.KLog
 import com.tencent.kuikly.core.nvi.serialization.json.JSONArray
 import com.tencent.kuikly.core.reactive.handler.observable
@@ -21,8 +23,12 @@ import com.tencent.kuikly.core.reactive.handler.observableList
 import com.tencent.kuikly.core.views.Image
 import com.tencent.kuikly.core.views.Input
 import com.tencent.kuikly.core.views.List
+import com.tencent.kuikly.core.views.ListView
+import com.tencent.kuikly.core.views.ScrollParams
+import com.tencent.kuikly.core.views.Scroller
 import com.tencent.kuikly.core.views.Text
 import com.tencent.kuikly.core.views.View
+import com.tencent.kuikly.core.views.WaterfallList
 import com.tencent.kuikly.core.views.compose.Button
 
 @Page("ChatPage")
@@ -30,6 +36,7 @@ internal class ChatPage : BasePager() {
     private var friendId = -1;
     private var friendName by observable("");
     private var chatRecords by observableList<ChatRecord>()
+    lateinit var listViewRef: ViewRef<ListView<*, *>>
 
     override fun created() {
         super.created()
@@ -81,6 +88,9 @@ internal class ChatPage : BasePager() {
                     marginTop(10f)
                     flexDirection(FlexDirection.COLUMN)
                 }
+                ref {
+                    ctx.listViewRef = it
+                }
                 vforLazy ({ctx.chatRecords}) { record, index, count ->
                     View {
                         attr {
@@ -95,21 +105,27 @@ internal class ChatPage : BasePager() {
                         }
                         Image {
                             attr {
-                                size(50f, 50f)
+                                size(35f, 35f)
                                 src(ImageUri.pageAssets("u=2231848948,299743226&fm=253&gp=0.jpg"))
                             }
                         }
-                        Text {
+                        View {
                             attr {
-                                fontSize(20f)
+                                padding(5f, 10f, 5f, 10f)
                                 backgroundColor(Color.GREEN)
                                 maxWidth(pagerData.pageViewWidth * 0.8f)
+                                borderRadius(5f)
                                 if (record.isSent == true) {
                                     marginLeft(10f)
                                 } else {
                                     marginRight(10f)
                                 }
-                                text(record.content.toString())
+                            }
+                            Text {
+                                attr {
+                                    fontSize(20f)
+                                    text(record.content.toString())
+                                }
                             }
                         }
                     }
@@ -126,6 +142,7 @@ internal class ChatPage : BasePager() {
                 Input {
                     attr {
                         border(Border(2f, BorderStyle.SOLID, Color.BLACK))
+                        borderRadius(5f)
                         size(pagerData.pageViewWidth - 130, 40f)
                         margin(0f, 20f, 0f, 20f)
                         placeholder("输入框提示")
@@ -141,6 +158,7 @@ internal class ChatPage : BasePager() {
                             fontSize(20f)
                             color(Color.BLACK)
                         }
+                        borderRadius(10f)
                         backgroundColor(Color.GREEN)
                         width(70f)
                         marginRight(40f)

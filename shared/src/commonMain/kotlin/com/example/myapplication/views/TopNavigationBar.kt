@@ -8,6 +8,8 @@ import com.tencent.kuikly.core.base.ViewBuilder
 import com.tencent.kuikly.core.base.ViewContainer
 import com.tencent.kuikly.core.base.attr.ImageUri
 import com.tencent.kuikly.core.directives.vif
+import com.tencent.kuikly.core.layout.FlexAlign
+import com.tencent.kuikly.core.layout.FlexJustifyContent
 import com.tencent.kuikly.core.module.RouterModule
 import com.tencent.kuikly.core.reactive.handler.observable
 import com.tencent.kuikly.core.views.Image
@@ -31,48 +33,53 @@ internal class TopNavigationBarView: ComposeView<TopNavigationBarViewAttr, TopNa
                 attr {
                     paddingTop(ctx.pagerData.statusBarHeight)
                     backgroundColor(Color.WHITE)
+                    allCenter()
+                    flexDirectionRow()
+                    height(60f)
                 }
-                // nav bar
                 View {
                     attr {
-                        height(44f)
+                        width(50f)
                         allCenter()
                     }
-
-                    Text {
-                        attr {
-                            text(ctx.attr.title)
-                            color(Color.BLACK)
-                            fontSize(17f)
-                        }
-                    }
-
-                }
-
-                vif({!ctx.attr.backDisable}) {
-                    Image {
-                        attr {
-                            absolutePosition(15f + getPager().pageData.statusBarHeight, 20f, 0f, 0f)
-                            size(10f, 17f)
-                            src("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAASBAMAAAB/WzlGAAAAElBMVEUAAAAAAAAAAAAAAAAAAAAAAADgKxmiAAAABXRSTlMAIN/PELVZAGcAAAAkSURBVAjXYwABQTDJqCQAooSCHUAcVROCHBiFECTMhVoEtRYA6UMHzQlOjQIAAAAASUVORK5CYII=")
-                        }
-                        event {
-                            click {
-                                getPager().acquireModule<RouterModule>(RouterModule.MODULE_NAME).closePage()
+                    vif ({ !ctx.attr.backDisable }) {
+                        Image {
+                            attr {
+                                size(20f, 20f)
+                                src(ImageUri.commonAssets("left-arrow.png"))
+                            }
+                            event {
+                                click {
+                                    getPager().acquireModule<RouterModule>(RouterModule.MODULE_NAME).closePage()
+                                }
                             }
                         }
                     }
                 }
-                vif({ctx.attr.moreButton}) {
-                    Image {
-                        attr {
-                            absolutePosition(15f + getPager().pageData.statusBarHeight, -17f - 15f + getPager().pageData.pageViewWidth, 0f, 15f)
-                            size(17f, 17f)
-                            src(ImageUri.pageAssets("3226aad105442dce35b8460d490074b8.jpeg"))
-                        }
-                        event {
-                            click {
-                                getPager().acquireModule<RouterModule>(RouterModule.MODULE_NAME).closePage()
+                Text {
+                    attr {
+                        text(ctx.attr.title)
+                        color(Color.BLACK)
+                        width(pagerData.pageViewWidth - 100f)
+                        textAlignCenter()
+                        fontSize(17f)
+                    }
+                }
+                View {
+                    attr {
+                        width(50f)
+                        allCenter()
+                    }
+                    vif ({ ctx.attr.moreButton }) {
+                        Image {
+                            attr {
+                                size(20f, 20f)
+                                src(ImageUri.commonAssets("more.png"))
+                            }
+                            event {
+                                click {
+                                    getPager().acquireModule<RouterModule>(RouterModule.MODULE_NAME).closePage()
+                                }
                             }
                         }
                     }

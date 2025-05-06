@@ -9,6 +9,7 @@ import com.tencent.kuikly.core.base.ViewBuilder
 import com.tencent.kuikly.core.base.attr.ImageUri
 import com.tencent.kuikly.core.directives.vbind
 import com.tencent.kuikly.core.directives.vfor
+import com.tencent.kuikly.core.directives.vif
 import com.tencent.kuikly.core.log.KLog
 import com.tencent.kuikly.core.module.RouterModule
 import com.tencent.kuikly.core.nvi.serialization.json.JSONObject
@@ -73,25 +74,27 @@ internal class HomePage : BasePager() {
                 }
             }
 
-            View {
-                attr {
-                    flexDirectionRow()
-                    alignItemsCenter()
-                }
-                Image {
+            vif ({ ctx.curStage != "Setting"}) {
+                View {
                     attr {
-                        marginLeft(20f)
-                        src(ImageUri.pageAssets("bbe436e4_E775769_910a88b4.png"))
-                        size(30f, 30f)
+                        flexDirectionRow()
+                        alignItemsCenter()
                     }
-                }
-                Input {
-                    attr {
-                        size(200f, 30f)
-                        marginLeft(20f)
-                        placeholder("输入框提示")
-                        placeholderColor(Color.BLACK)
-                        color(Color.BLACK)
+                    Image {
+                        attr {
+                            marginLeft(20f)
+                            src(ImageUri.pageAssets("bbe436e4_E775769_910a88b4.png"))
+                            size(30f, 30f)
+                        }
+                    }
+                    Input {
+                        attr {
+                            size(200f, 30f)
+                            marginLeft(20f)
+                            placeholder("输入框提示")
+                            placeholderColor(Color.BLACK)
+                            color(Color.BLACK)
+                        }
                     }
                 }
             }
@@ -173,6 +176,74 @@ internal class HomePage : BasePager() {
                                             fontSize(23f)
                                             text(item)
                                         }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    "Setting" -> {
+                        List {
+                            attr {
+                                flex(1f)
+                                flexDirectionColumn()
+                                marginTop(20f)
+                            }
+                            View {
+                                attr {
+                                    flexDirectionRow()
+                                    marginLeft(10f)
+                                }
+                                Image {
+                                    attr {
+                                        size(50f, 50f)
+                                        src(ImageUri.pageAssets("u=371927902,3140277954&fm=253&gp=0.jpg"))
+                                    }
+                                }
+                                View {
+                                    attr {
+                                        marginLeft(10f)
+                                        flexDirectionColumn()
+                                    }
+                                    Text {
+                                        attr {
+                                            fontSize(27f)
+                                            text("少时诵诗书山山水水")
+                                        }
+                                    }
+                                    Text {
+                                        attr {
+                                            fontSize(17f)
+                                            text("账号：666666666")
+                                        }
+                                    }
+                                }
+                            }
+                            View {
+                                attr {
+                                    marginTop(15f)
+                                    flexDirectionRow()
+                                }
+                                Image {
+                                    attr {
+                                        size(25f, 25f)
+                                        marginLeft(10f)
+                                        src(ImageUri.pageAssets("info.png"))
+                                    }
+                                }
+                                Text {
+                                    attr {
+                                        fontSize(20f)
+                                        marginLeft(10f)
+                                        width(pagerData.pageViewWidth - 90f)
+                                        text("关于")
+                                    }
+                                }
+                                Image {
+                                    attr {
+                                        size(25f, 25f)
+                                        marginRight(10f)
+                                        src(ImageUri.pageAssets("right.png"))
                                     }
                                 }
                             }
