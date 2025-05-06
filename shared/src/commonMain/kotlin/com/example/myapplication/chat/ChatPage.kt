@@ -12,10 +12,8 @@ import com.tencent.kuikly.core.base.ViewBuilder
 import com.tencent.kuikly.core.base.ViewRef
 import com.tencent.kuikly.core.base.attr.ImageUri
 import com.tencent.kuikly.core.directives.vbind
-import com.tencent.kuikly.core.directives.vfor
 import com.tencent.kuikly.core.directives.vforLazy
 import com.tencent.kuikly.core.layout.FlexDirection
-import com.tencent.kuikly.core.layout.FlexJustifyContent
 import com.tencent.kuikly.core.log.KLog
 import com.tencent.kuikly.core.nvi.serialization.json.JSONArray
 import com.tencent.kuikly.core.reactive.handler.observable
@@ -24,11 +22,8 @@ import com.tencent.kuikly.core.views.Image
 import com.tencent.kuikly.core.views.Input
 import com.tencent.kuikly.core.views.List
 import com.tencent.kuikly.core.views.ListView
-import com.tencent.kuikly.core.views.ScrollParams
-import com.tencent.kuikly.core.views.Scroller
 import com.tencent.kuikly.core.views.Text
 import com.tencent.kuikly.core.views.View
-import com.tencent.kuikly.core.views.WaterfallList
 import com.tencent.kuikly.core.views.compose.Button
 
 @Page("ChatPage")
@@ -87,11 +82,18 @@ internal class ChatPage : BasePager() {
             List {
                 attr {
                     flex(1f)
-                    marginTop(10f)
                     flexDirection(FlexDirection.COLUMN)
                 }
                 ref {
                     ctx.listViewRef = it
+                }
+                event {
+                    scroll { scrollParams ->
+                        KLog.i("ChatPage", "scrollParams: $scrollParams")
+                    }
+                    contentSizeChanged { width, height ->
+                        ctx.listViewRef.view?.setContentOffset(0f, height - getPager().pageData.pageViewHeight + 110.5f, false)
+                    }
                 }
                 vforLazy ({ctx.chatRecords}) { record, index, count ->
                     View {

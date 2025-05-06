@@ -31,11 +31,11 @@ internal class TopNavigationBarView: ComposeView<TopNavigationBarViewAttr, TopNa
         return {
             View {
                 attr {
-                    paddingTop(ctx.pagerData.statusBarHeight)
+                    marginTop(ctx.pagerData.statusBarHeight)
                     backgroundColor(Color.WHITE)
                     allCenter()
                     flexDirectionRow()
-                    height(60f)
+                    height(50f)
                 }
                 View {
                     attr {
