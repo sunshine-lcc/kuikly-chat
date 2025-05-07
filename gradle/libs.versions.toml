@@ -1,5 +1,6 @@
 [versions]
 coreKtxVersion = "1.10.1"
+hyphenateChat = "4.14.0"
 jacksonDatabind = "2.19.0"
 kuikly = "2.0.0-2.0.21"
 dynamicanimation = "1.0.0"
@@ -15,6 +16,7 @@ androidx-dynamicanimation = { module = "androidx.dynamicanimation:dynamicanimati
 androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
+hyphenate-chat = { module = "io.hyphenate:hyphenate-chat", version.ref = "hyphenateChat" }
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jacksonDatabind" }
 kuikly-core = { module = "com.tencent.kuikly-open:core", version.ref = "kuikly" }
 kuikly-core-annotations = { module = "com.tencent.kuikly-open:core-annotations", version.ref = "kuikly" }

@@ -4,20 +4,16 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsetsController
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.tencent.kuikly.core.render.android.IKuiklyRenderExport
-import com.tencent.kuikly.core.render.android.adapter.KuiklyRenderAdapterManager
-import com.tencent.kuikly.core.render.android.css.ktx.toMap
-import com.tencent.kuikly.core.render.android.expand.KuiklyRenderViewBaseDelegatorDelegate
-import com.tencent.kuikly.core.render.android.expand.KuiklyRenderViewBaseDelegator
 import com.example.myapplication.adapter.KRColorParserAdapter
-import com.example.myapplication.module.KRDatabaseModule
 import com.example.myapplication.adapter.KRFontAdapter
 import com.example.myapplication.adapter.KRImageAdapter
 import com.example.myapplication.adapter.KRLogAdapter
@@ -25,9 +21,20 @@ import com.example.myapplication.adapter.KRRouterAdapter
 import com.example.myapplication.adapter.KRThreadAdapter
 import com.example.myapplication.adapter.KRUncaughtExceptionHandlerAdapter
 import com.example.myapplication.module.KRBridgeModule
+import com.example.myapplication.module.KRDatabaseModule
 import com.example.myapplication.module.KRKVStoreModule
 import com.example.myapplication.module.KRShareModule
+import com.hyphenate.EMCallBack
+import com.hyphenate.chat.EMClient
+import com.hyphenate.chat.EMOptions
+import com.tencent.kuikly.core.render.android.IKuiklyRenderExport
+import com.tencent.kuikly.core.render.android.adapter.KuiklyRenderAdapterManager
+import com.tencent.kuikly.core.render.android.css.ktx.toMap
+import com.tencent.kuikly.core.render.android.expand.KuiklyRenderViewBaseDelegator
+import com.tencent.kuikly.core.render.android.expand.KuiklyRenderViewBaseDelegatorDelegate
 import org.json.JSONObject
+import kotlin.time.Duration
+
 
 class KuiklyRenderActivity : AppCompatActivity(), KuiklyRenderViewBaseDelegatorDelegate {
 
@@ -56,6 +63,16 @@ class KuiklyRenderActivity : AppCompatActivity(), KuiklyRenderViewBaseDelegatorD
         loadingView = findViewById(R.id.hr_loading)
         errorView = findViewById(R.id.hr_error)
         kuiklyRenderViewDelegator.onAttach(hrContainerView, "", pageName, createPageData())
+
+        val options = EMOptions()
+        // TODO: 修改成自己的appKey
+        options.appKey = ""
+        // 其他 EMOptions 配置......
+        // context 为上下文，在 Application 或者 Activity 中可以用 this 代替
+        EMClient.getInstance().init(KRApplication.application, options)
+        val isInited = EMClient.getInstance().isSdkInited
+        Toast.makeText(KRApplication.application, "环信IM初始化状态：$isInited",
+            Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroy() {

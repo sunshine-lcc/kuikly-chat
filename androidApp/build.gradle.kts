@@ -8,11 +8,11 @@ android {
     namespace = "com.example.myapplication"
     compileSdk = 35
     defaultConfig {
-        applicationId = "com.example.myapplication"
+        applicationId = "com.lccdev.litechat"
         minSdk = 31
         targetSdk = 35
-        versionCode = 12
-        versionName = "1.12"
+        versionCode = 13
+        versionName = "1.13"
     }
 
     buildTypes {
@@ -52,6 +52,7 @@ dependencies {
     implementation(libs.androidx.dynamicanimation)
     implementation(libs.jackson.databind)
     implementation(libs.androidx.room.runtime)
+    implementation(libs.hyphenate.chat)
     // If this project uses any Kotlin source, use Kotlin Symbol Processing (KSP)
     // See Add the KSP plugin to your project
     ksp(libs.androidx.room.compiler)
