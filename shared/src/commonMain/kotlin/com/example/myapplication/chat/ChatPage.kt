@@ -12,7 +12,6 @@ import com.tencent.kuikly.core.base.ViewBuilder
 import com.tencent.kuikly.core.base.ViewRef
 import com.tencent.kuikly.core.base.attr.ImageUri
 import com.tencent.kuikly.core.directives.vbind
-import com.tencent.kuikly.core.directives.vfor
 import com.tencent.kuikly.core.directives.vforLazy
 import com.tencent.kuikly.core.layout.FlexDirection
 import com.tencent.kuikly.core.log.KLog
@@ -29,10 +28,12 @@ import com.tencent.kuikly.core.views.compose.Button
 
 @Page("ChatPage")
 internal class ChatPage : BasePager() {
-    private var friendId = -1;
-    private var friendName by observable("");
+    private var friendId = -1
+    private var friendName by observable("")
     private var chatRecords by observableList<ChatRecord>()
     lateinit var listViewRef: ViewRef<ListView<*, *>>
+    // ... | listInited | listFirstShowed
+    private var setListOffEndVec: Int = 0b00000000
 
     override fun created() {
         super.created()
@@ -49,16 +50,19 @@ internal class ChatPage : BasePager() {
             for (i in 0 until len) {
                 val tempJSONObject = temp.optJSONObject(i)
                 KLog.i("ChatPage", "tempJSONObj 444: $tempJSONObject")
-                chatRecords.add(ChatRecord(
-                    uid = tempJSONObject?.optInt("uid"),
-                    userId = tempJSONObject?.optInt("userId"),
-                    timeStamp = tempJSONObject?.optLong("timeStamp"),
-                    content = tempJSONObject?.optString("content"),
-                    sent = tempJSONObject?.optBoolean("sent"),
-                    type = MessageType.valueOf(tempJSONObject?.optString("type").toString())
-                ))
+                chatRecords.add(
+                    ChatRecord(
+                        uid = tempJSONObject?.optInt("uid"),
+                        userId = tempJSONObject?.optInt("userId"),
+                        timeStamp = tempJSONObject?.optLong("timeStamp"),
+                        content = tempJSONObject?.optString("content"),
+                        sent = tempJSONObject?.optBoolean("sent"),
+                        type = MessageType.valueOf(tempJSONObject?.optString("type").toString())
+                    )
+                )
             }
 
+            this.setListOffEndVec = this.setListOffEndVec or 0b00000010
             KLog.i("ChatPage", "chatRecords.size 333: ${chatRecords.size}")
         }
 
@@ -71,7 +75,7 @@ internal class ChatPage : BasePager() {
     override fun body(): ViewBuilder {
         val ctx = this
         return {
-            vbind ({ctx.friendName}) {
+            vbind({ ctx.friendName }) {
                 TopNavBar {
                     attr {
                         backDisable = false
@@ -93,10 +97,19 @@ internal class ChatPage : BasePager() {
                         KLog.i("ChatPage", "scrollParams: $scrollParams")
                     }
                     contentSizeChanged { width, height ->
-                        ctx.listViewRef.view?.setContentOffset(0f, height - getPager().pageData.pageViewHeight + 110f + getPager().pageData.statusBarHeight, false)
+                        if ((ctx.setListOffEndVec and 3) != 3) {
+                            ctx.listViewRef.view?.setContentOffset(
+                                0f,
+                                height - getPager().pageData.pageViewHeight + 110f + getPager().pageData.statusBarHeight,
+                                false
+                            )
+                            if ((ctx.setListOffEndVec and 2) != 0) {
+                                ctx.setListOffEndVec = ctx.setListOffEndVec or 0b00000001
+                            }
+                        }
                     }
                 }
-                vfor ({ctx.chatRecords}) { record ->
+                vforLazy({ ctx.chatRecords }) { record, index, count ->
                     View {
                         attr {
                             maxHeight(150f)
@@ -172,7 +185,8 @@ internal class ChatPage : BasePager() {
                     }
                     event {
                         click { clickParams ->
-                            getPager().acquireModule<BridgeModule>(BridgeModule.MODULE_NAME).toast("点击了发送按钮")
+                            getPager().acquireModule<BridgeModule>(BridgeModule.MODULE_NAME)
+                                .toast("点击了发送按钮")
                         }
                     }
                 }
