@@ -1,4 +1,4 @@
-package com.example.myapplication.chat
+package com.example.myapplication.pages.chat
 
 import com.example.myapplication.base.BasePager
 import com.example.myapplication.base.BridgeModule

@@ -1,4 +1,4 @@
-package com.example.myapplication.home
+package com.example.myapplication.pages.home
 
 import com.tencent.kuikly.core.base.Color
 import com.tencent.kuikly.core.base.ColorStop

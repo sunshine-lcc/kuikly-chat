@@ -1,6 +1,7 @@
-package com.example.myapplication.home
+package com.example.myapplication.pages.home
 
 import com.example.myapplication.base.BasePager
+import com.example.myapplication.utils.ChatIM
 import com.example.myapplication.views.TopNavBar
 import com.example.myapplication.utils.KVStore
 import com.tencent.kuikly.core.annotations.Page
@@ -64,6 +65,9 @@ internal class HomePage : BasePager() {
                 messageList.add(i)
             }
         }
+
+        acquireModule<ChatIM>(ChatIM.MODULE_NAME).init()
+        acquireModule<ChatIM>(ChatIM.MODULE_NAME).login("", "")
     }
 
     override fun body(): ViewBuilder {

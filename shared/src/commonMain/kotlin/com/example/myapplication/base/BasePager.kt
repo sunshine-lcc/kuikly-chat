@@ -1,5 +1,6 @@
 package com.example.myapplication.base
 
+import com.example.myapplication.utils.ChatIM
 import com.example.myapplication.utils.Database
 import com.example.myapplication.utils.KVStore
 import com.tencent.kuikly.core.module.Module
@@ -15,6 +16,7 @@ internal abstract class BasePager : Pager() {
         externalModules[BridgeModule.MODULE_NAME] = BridgeModule()
         externalModules[Database.MODULE_NAME] = Database()
         externalModules[KVStore.MODULE_NAME] = KVStore()
+        externalModules[ChatIM.MODULE_NAME] = ChatIM()
 
         return externalModules
     }

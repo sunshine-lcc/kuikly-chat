@@ -1,4 +1,4 @@
-package com.example.myapplication.chat
+package com.example.myapplication.pages.chat
 
 class ChatRecord(
     val uid: Int?,

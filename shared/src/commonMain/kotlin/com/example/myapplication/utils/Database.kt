@@ -1,9 +1,7 @@
 package com.example.myapplication.utils
 
-import com.example.myapplication.chat.ChatRecord
 import com.tencent.kuikly.core.module.CallbackFn
 import com.tencent.kuikly.core.module.Module
-import com.tencent.kuikly.core.nvi.serialization.json.JSONObject
 
 class Database: Module() {
     override fun moduleName(): String = "KRDatabaseModule"
