@@ -6,13 +6,13 @@ plugins {
 
 android {
     namespace = "com.example.myapplication"
-    compileSdk = 35
+    compileSdk = 36
     defaultConfig {
         applicationId = "com.lccdev.litechat"
-        minSdk = 31
-        targetSdk = 35
-        versionCode = 13
-        versionName = "1.13"
+        minSdk = 23
+        targetSdk = 36
+        versionCode = 14
+        versionName = "1.14"
     }
 
     buildTypes {
@@ -52,7 +52,9 @@ dependencies {
     implementation(libs.androidx.dynamicanimation)
     implementation(libs.jackson.databind)
     implementation(libs.androidx.room.runtime)
-    implementation(libs.hyphenate.chat)
+    implementation (libs.openim.android.sdk)
+    implementation (libs.openim.core.sdk)
+    implementation (libs.gson)
     // If this project uses any Kotlin source, use Kotlin Symbol Processing (KSP)
     // See Add the KSP plugin to your project
     ksp(libs.androidx.room.compiler)

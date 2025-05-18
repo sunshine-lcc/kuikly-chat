@@ -115,10 +115,10 @@ dependencies {
 
 android {
     namespace = "com.example.myapplication.shared"
-    compileSdk = 35
+    compileSdk = 36
     defaultConfig {
-        minSdk = 31
-        lint.targetSdk = 35
+        minSdk = 23
+        lint.targetSdk = 36
     }
     sourceSets {
         named("main") {
